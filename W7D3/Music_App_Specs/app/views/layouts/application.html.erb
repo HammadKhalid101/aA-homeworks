@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MusicApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css" integrity="sha512-8bHTC73gkZ7rZ7vpqUQThUDhqcNFyYi2xgDgPDHc+GXVGHXq+xPjynxIopALmOPqzo9JZj0k6OqqewdGO3EsrQ==" crossorigin="anonymous" />
+  </head>
+  
+
+  <body class="ui container">
+  <header display:flex,justify-content:center>
+
+  <h1> Music App
+
+  <% if logged_in? %>
+  <h2>Welcome <%= current_user.email %></h2>
+    <form action="<%= session_url %>" method="POST"> 
+      <input type="hidden" name="_method" value="DELETE">
+      <input class="ui button" type="submit" value="Logout">
+    </form>
+    <% end %>
+
+    <% unless logged_in? %>
+
+      <a class="ui button" href="<%= new_session_url %>">Log In</a>
+
+      <a class="ui button" href="<%= new_user_url %>">Sign Up</a>
+
+    <% end %>
+  </h1>
+
+
+    <% if flash[:errors] %>
+      <ul>
+
+        <% flash[:errors].each do |error| %>
+
+          <li>
+            <%= error %>
+          </li>
+
+        <% end %>
+
+      </ul>
+    <% end %>
+
+    <%= yield %>
+  </body>
+</html>
